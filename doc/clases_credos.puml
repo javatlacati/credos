@@ -1,0 +1,337 @@
+@startuml
+' las interfaces son doctrinas
+' los enums son hechos irrefutables
+
+skinparam groupInheritance 3
+
+title Credos y denominaciones
+
+package doctrinas{
+    interface Politeista{}
+    interface Monoteista{}
+    interface Trinidad<<Cristiano>>{}
+    interface CincoSolas{
+     +solaFide:String[]
+     +solaGratia:String[]
+     +solaScriptura:String[]
+     +solusChristus:String[]
+     +soliDeoGloria:String[]
+    }
+    interface InmaculadaConcepcion<<Marianista>>{}
+    interface SucesionApostolica<<Papista>>{}
+    interface BautismoDeInfantes{}
+    interface Purgatorio{}
+    interface InfalibilidadPapal{}
+    interface Miafisismo{}
+    interface Deificacion<<Theosis>>{}
+    interface InmortalidadDelAlma{}
+    interface Glosolalia{}
+    interface Xenoglosia{}
+    interface SegundoToque<<BautismoDelEspíritu>>{}
+    interface ProsperidadSobrenatural{}
+    interface GuerraEspiritual{}
+    interface Restauracionismo{}
+    interface Continuismo{}
+    interface Cesacionismo{}
+    interface TeologiaDelPacto{}
+    interface Dispensacionalismo{}
+
+    note bottom of Trinidad
+         Un solo Dios en tres personas:
+         Padre, Hijo y Espíritu Santo.
+    end note
+
+    note bottom of InmaculadaConcepcion
+         María, la madre de Jesús, fue concebida sin pecado original
+         para ser digna de ser la Madre de Dios.
+    end note
+
+    note bottom of SucesionApostolica
+         Se afirma que el Papa es el sucesor de San Pedro
+         y tiene la autoridad primacial sobre la Iglesia.
+    end note
+
+    note bottom of InfalibilidadPapal
+          En ciertas condiciones (cuando habla ex cathedra),
+          los pronunciamientos del papa son infalibles.
+    end note
+
+    note bottom of Miafisismo
+           La naturaleza divina y humana de Cristo están
+           unidas en una sola naturaleza
+    end note
+
+    note bottom of Deificacion
+            La salvación es vista como el proceso de alcanzar la teosis
+            "volverse más parecido a Dios" mediante la gracia
+    end note
+
+    note bottom of Purgatorio
+           Las almas que mueren en gracia de Dios, pero no perfectamente purificadas,
+           pasan por una purificación temporal después de la muerte para alcanzar la
+           santidad necesaria para entrar al cielo
+    end note
+    note bottom of BautismoDeInfantes
+           El bautismo libera a los infantes del pecado original
+           heredado de Adán y Eva
+    end note
+    note bottom of Restauracionismo
+           La iglesia cree que la Iglesia Católica se desvió del cristianismo
+           primitivo y que su misión es restaurar la iglesia original de Jesucristo.
+    end note
+    note bottom of Continuismo
+           Todos los dones mencionados en el Nuevo Testamento (sanidad, profecía,
+           milagros, etc.) siguen vigentes y operativos en la iglesia hoy en día
+    end note
+    note bottom of Cesacionismo
+           Todos los dones mencionados en el Nuevo Testamento (sanidad, profecía,
+                      milagros, etc.) cesaron
+    end note
+    note bottom of SegundoToque
+           La manifestación física inicial y obligatoria de haber recibido el
+           bautismo en el Espíritu Santo es hablar en lenguas
+    end note
+    note bottom of Glosolalia
+            Hablar lenguas angélicas
+    end note
+    note bottom of Xenoglosia
+           Hablar un idioma no aprendido, según lo registrado en el libro de
+           los Hechos
+    end note
+    note bottom of TeologiaDelPacto
+           El nuevo pacto invalida al pacto antiguo
+    end note
+    note bottom of Dispensacionalismo
+           Distinción entre Israel y la Iglesia
+    end note
+
+}
+
+package hechosHistoricos{
+    enum EXISTENCIA_DE_ABRAHAM
+    enum EXISTENCIA_DE_JUAN_EL_BAUTISTA
+    enum EXISTENCIA_DE_JESUCRISTO
+    enum EXISTENCIA_DE_BUDA
+    enum EDICTO_DE_MILAN
+    enum FUNDADA_POR_ENRIQUE_OCTAVO
+    enum REFORMISTAS
+}
+
+note bottom of EDICTO_DE_MILAN
+     Edicto de Milán fue promulgado por el emperador
+     Constantino en el año 313 d.C y puso fin a las
+     persecuciones romanas permitiendo crear una religión
+     unificadora para los romanos
+end note
+
+
+package credo{
+    class Hinduismo{
+    }
+
+    class Buddhismo{
+        hechoHistorico: EXISTENCIA_DE_BUDA
+    }
+
+    abstract class Abrahamica{
+        hechoHistorico: EXISTENCIA_DE_ABRAHAM
+    }
+
+    class Judaismo{
+        fuenteDeDoctrina: String = ['Torah', 'Targumim', 'Tanaj']
+    }
+
+   package sectasJudias{
+        class Fariseo{}
+
+       class Saduceo{
+           fuenteDeDoctrina: String = ['Torah']
+       }
+
+       class Esenio{}
+
+       class Zelote{
+           supremacista()
+       }
+   }
+
+    class Islam{
+        fuenteDeDoctrina: String = ['Qoran']
+    }
+
+    abstract class Cristianoide<<Cristiano según opinión popular>>{
+        hechoHistorico: EXISTENCIA_DE_JESUCRISTO
+    }
+
+   package denominaciones{
+
+        class CatolicoApostolicoRomano{
+            hechoHistorico: EDICTO_DE_MILAN
+            dirigente: String = 'Papa'
+        }
+        class Anglicano{
+         hechoHistorico: FUNDADA_POR_ENRIQUE_OCTAVO
+         dirigente: String = 'Rey de Inglaterra'
+        }
+
+        class LaLuzDelMundo{}
+
+        'tienen gobierno conciliar
+        class CatolicoOrtodoxoOriental{}
+
+        class CatolicoOrtodoxoDelEste{}
+
+        abstract class Protestante{}
+
+        abstract class ProtestanteTradicional{
+           hechoHistorico: REFORMISTAS
+        }
+
+        class Luterano{}
+        class Presbiteriano{}
+        class Calvinista{}
+        class Anabaptista{}
+
+        abstract class ProtestanteModerno<<Protestante Evangélico>>{}
+
+        class Metodista{}
+
+        class Bautista{}
+        class BautistaReformado{}
+
+        class JudeoCristiano{}
+        class Adventista<<Adventista del séptimo día>>{}
+
+        package Sectas{
+            class Modalista<<Unicitario>>{
+                rechazarTrinidad()
+            }
+            class Sud<<Mormón>>{
+              fuenteDeDoctrina: String[] = ['Libro del Mormón', 'La perla de gran precio']
+              r4c1sm0()
+              iluminacion()
+              matrimoioEterno()
+              rechazarCafeYSustancias()
+              soaking()
+              preexistenciaDelAlma()
+            }
+            class Menonitas{
+                rechazarAutoridadesSeculares()
+                antinacionalismo()
+                poligamiaOpcional()
+            }
+            class Atalayas<<TestigosDeArrio>>{
+                rechazarTrinidad()
+                rechazarDeidadDeCristo()
+                rechazarAutoridadesSeculares()
+                antinacionalismo()
+                rechazarTransfusionesDeSangre()
+                rechazarDonacionDeOrganos()
+            }
+            class Santero{}
+            class Santamuertista{}
+            class DiosaMadre<<IDDSMM>>{
+            diosaMadre()
+            segundaVenidaEnPasado()
+            preHumanosAngelesCaidos()
+            }
+            class Ebionista{
+                rechazarDeidadDeCristo()
+            }
+        }
+   }
+
+}
+
+package Movimientos{
+    abstract class Pentecostal{}
+
+    class PentecostalTradicional{
+    }
+
+    class NeoPentecostal{}
+    class Arminianismo{}
+    class Puritanismo{}
+}
+
+
+Abrahamica <|-- Judaismo
+
+Abrahamica <|-- Islam
+Monoteista <|-- Abrahamica
+Politeista <|-- Hinduismo
+Abrahamica <|-- Cristianoide
+
+Cristianoide <|-[#0000FF]- CatolicoApostolicoRomano
+Cristianoide <|-- Anglicano
+Cristianoide <|-- LaLuzDelMundo
+
+Cristianoide <|-- Protestante
+
+
+Protestante <|-- ProtestanteTradicional
+
+ProtestanteTradicional <|-- Luterano
+ProtestanteTradicional <|-- Presbiteriano
+ProtestanteTradicional <|-- Calvinista
+ProtestanteTradicional <|-- Anabaptista
+
+Protestante <|-- ProtestanteModerno
+
+ProtestanteModerno <|-- Pentecostal
+ProtestanteModerno <|-- Metodista
+ProtestanteModerno <|-- Bautista
+ProtestanteModerno <|-- Adventista
+ProtestanteModerno <|-- JudeoCristiano
+Pentecostal <|-- PentecostalTradicional
+
+'sectas
+Anabaptista .. Sud
+Anabaptista .. Modalista
+Adventista .. DiosaMadre
+Adventista .. Atalayas
+Pentecostal .. NeoPentecostal
+JudeoCristiano .. Ebionista
+CatolicoApostolicoRomano .. Santero
+CatolicoApostolicoRomano .. Santamuertista
+Anabaptista -- Menonitas
+
+' doctrinas
+Monoteista <|-- Trinidad
+CincoSolas <|-[#353012]- Protestante
+CincoSolas <|-- Modalista
+
+CatolicoApostolicoRomano <|-[#EECAEA]- InmaculadaConcepcion
+CatolicoApostolicoRomano <|-[#EECAEA]- SucesionApostolica
+CatolicoApostolicoRomano <|-[#EECAEA]- Purgatorio
+CatolicoApostolicoRomano <|-[#EECAEA]- BautismoDeInfantes
+CatolicoApostolicoRomano <|-[#EECAEA]- InfalibilidadPapal
+
+Miafisismo <|-- CatolicoOrtodoxoOriental
+Deificacion <|-[#FAFEBA]- CatolicoOrtodoxoOriental
+Deificacion <|-[#FAFEBA]- CatolicoOrtodoxoDelEste
+
+Protestante <|-[#CA4EBA]- Trinidad
+Protestante <|-- Restauracionismo
+LaLuzDelMundo <|-- Restauracionismo
+Sud <|-- Restauracionismo
+
+Esenio <|-- InmortalidadDelAlma
+Sud <|-- InmortalidadDelAlma
+
+Pentecostal <|-- Continuismo
+Pentecostal <|-- Xenoglosia
+Pentecostal <|-- SegundoToque
+Metodista <|-[#cyan]- SegundoToque : Gracia Santificante
+
+NeoPentecostal <|-- ProsperidadSobrenatural
+NeoPentecostal <|-- GuerraEspiritual
+NeoPentecostal <|-- Glosolalia
+
+BautistaReformado <|-- TeologiaDelPacto
+BautistaReformado <|-- Dispensacionalismo
+
+Bautista <|-- BautistaReformado
+
+
+@enduml

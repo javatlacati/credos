@@ -706,6 +706,28 @@ export const initialNodes = [
     },
     extent: 'parent'
   },
+  {
+    id: 'd34',
+    type: 'default',
+    parentId: 'd0',
+    position: {x: 0, y: 800},
+    data: {
+      label: 'Prohibición de anticonceptivos',
+      note: '' //no hay versículos
+    },
+    extent: 'parent'
+  },
+  {
+    id: 'd35',
+    type: 'default',
+    parentId: 'd0',
+    position: {x: 0, y: 800},
+    data: {
+      label: 'Pastorado Femenino',
+      note: 'Gn 29:9, Ga 3:26-28, Jo 2:28, '
+    },
+    extent: 'parent'
+  },
 
   {
     id: 'f1',

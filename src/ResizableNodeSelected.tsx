@@ -1,4 +1,4 @@
-import {memo, useEffect} from 'react';
+import {memo} from 'react';
 import {Handle, Position, NodeResizer, useNodeConnections, useEdges} from '@xyflow/react';
 
 const ResizableNodeSelected = ({data, selected}) => {

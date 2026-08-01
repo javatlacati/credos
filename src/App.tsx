@@ -1,4 +1,4 @@
-import {useCallback, useState} from 'react'
+import {useCallback, useState, useEffect} from 'react'
 import './App.css'
 import {
   ReactFlow,
@@ -23,26 +23,65 @@ const useLayoutedElements = () => {
   const {getNodes, setNodes, getEdges, fitView} = useReactFlow();
   const defaultOptions = {
     'elk.algorithm': 'layered',
+    'elk.direction': 'DOWN',
     'elk.layered.spacing.nodeNodeBetweenLayers': 100,
     'elk.spacing.nodeNode': 80,
   };
 
   const getLayoutedElements = useCallback((options) => {
     const layoutOptions = {...defaultOptions, ...options};
+    
+    // Distribute child nodes within parents to avoid overlap
+    const distributeChildNodes = (nodes) => {
+      const parentMap = new Map();
+      
+      // Group children by parent
+      nodes.forEach(node => {
+        if (node.parentId) {
+          if (!parentMap.has(node.parentId)) {
+            parentMap.set(node.parentId, []);
+          }
+          parentMap.get(node.parentId).push(node);
+        }
+      });
+      
+      // Distribute children in a simple grid
+      parentMap.forEach((children, parentId) => {
+        const parent = nodes.find(n => n.id === parentId);
+        const parentWidth = parent?.style?.width || 370;
+        const padding = 10;
+        const columns = 2;
+        const colWidth = (parentWidth - padding * (columns + 1)) / columns;
+        
+        children.forEach((child, index) => {
+          const col = index % columns;
+          const row = Math.floor(index / columns);
+          const childHeight = child?.style?.height || 100;
+          
+          child.position = {
+            x: padding + col * (colWidth + padding),
+            y: padding + row * (childHeight + padding)
+          };
+        });
+      });
+      
+      return nodes;
+    };
+    
+    const nodes = distributeChildNodes(getNodes());
+    
     const graph = {
       id: 'root',
       layoutOptions: layoutOptions,
-      children: getNodes().map((node) => ({
+      children: nodes.map((node) => ({
         ...node,
-        width: node.measured.width,
-        height: node.measured.height,
+        width: node.measured?.width || node.style?.width || 200,
+        height: node.measured?.height || node.style?.height || 100,
       })),
       edges: getEdges(),
     };
 
     elk.layout(graph).then(({children}) => {
-      // By mutating the children in-place we saves ourselves from creating a
-      // needless copy of the nodes array.
       children.forEach((node) => {
         node.position = {x: node.x, y: node.y};
       });
@@ -61,6 +100,13 @@ function LayoutFlow() {
 
 
   const {getLayoutedElements} = useLayoutedElements();
+
+  useEffect(() => {
+    const timer = setTimeout(() => {
+      getLayoutedElements();
+    }, 100);
+    return () => clearTimeout(timer);
+  }, [getLayoutedElements]);
 
   const onNodesChange = useCallback(
     (changes) => setNodes((nodesSnapshot) => applyNodeChanges(changes, nodesSnapshot)),
